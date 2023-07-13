@@ -95,6 +95,10 @@
     名前:<input id="tf1" value="名無し" type="textfield">
     <br>
     tweet:<input id="tf2" type="textfield">
+    <form action="test.html" method="post" enctype="multipart/form-data">
+        <input type="file" name="test" required>
+        <input type="submit" value="送信する">
+    </form>
     <button onclick="button1Pressed()">tweet</button>
     <br>
     <p id="result1"></p>
@@ -104,6 +108,7 @@
     <button onclick="button3Pressed()">検索</button>
     <hr>
     <p id="result2">xxxx</p>
+
 </body>
 
 </html>
