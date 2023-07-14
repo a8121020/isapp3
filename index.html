@@ -5,18 +5,12 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-    <script type="text/javascript" src="../lib/jquery.min.js"></script>
-    <script type="text/javascript" src="../lib/osql.js"></script>
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
 
     <script>
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
 
-        $(document).ready(async function () {
-            var username = sessionStorage.getItem('username');
-            document.getElementById('userName').innerHTML = username;
-        });
-
-        /*
         async function buttonPressed() {
             var userid = document.getElementById('tf1').value;
             var passward = document.getElementById('tf2').value;
@@ -37,21 +31,25 @@
 
             location.href = 'Top_TimeLine.html';
         }
-        */
+
         //<p style="text-align: right"><a href="admintop.html">管理者ページ</a></p>
     </script>
 
 </head>
 
 <body>
-    <h1 id="userName"></h1>
+    <h1>みんなの飲み物</h1>
     <div>
-        <h2></h2>
+        <h2>ログイン</h2>
+        userid:<input id="tf1" value="as" type="textfield">
         <br>
+        password:<input id="tf2" value="1234" type="passward">
         <br>
+        <button onclick="buttonPressed()">ログイン</button>
         <p id="result"></p>
     </div>
     <hr>
+    <p><a href="register.html">新規登録</a></p>
     <hr>
 </body>
 
