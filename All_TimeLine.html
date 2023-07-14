@@ -44,10 +44,10 @@
         }
 
         async function doInsert() {
-            var username = sessionStorage.getItem('username');
+            var userid = sessionStorage.getItem('userid');
             var tweet = document.getElementById('tf2').value;
 
-            var sql = `insert into Tweets (name, tweet, time) values("${username}", "${tweet}", now());`;
+            var sql = `insert into Tweets (studentid,tweet, time) values("${userid}", "${tweet}", now());`;
             var objects = await osql.connect(sql);
             console.log(objects);
 
@@ -86,13 +86,25 @@
                 var object = objects[i];
                 html = html + '<tr>';
                 html = html + '<td>' + object.id + '</td>'
-                html = html + '<td>' + object.name + '</td>'
+                html = html + '<td>' + '<a href="userpage.html?name=' + object.studentid + '">@' + object.studentid + '</a></td>'
                 html = html + '<td>' + object.tweet + '</td>'
                 html = html + '<td>' + object.time + '</td>';
+                html = html + '<td>' + '<button onclick="Follow(' + object.studentid + ')">フォローする</button>' + '</td>';
                 html = html + '</tr>';
             }
             html = html + '</table>';
             document.getElementById('result2').innerHTML = html;
+        }
+        async function Follow(Followed) {
+            var Follower = sessionStorage.getItem('userid');
+            var ans = window.confirm("フォローしますか？");
+            if (Follower == Followed) {
+                document.getElementById("resultFollow").innerHTML = "自分をフォローしようとしています"
+            } else if (Follower != Followed && ans == true) {
+                var sql = `insert into Follows (fromid,toid) values("${Follower}", "${Followed}")`;
+                var object = await osql.connect(sql);
+                document.getElementById("resultFollow").innerHTML = "フォローしました！"
+            }
         }
     </script>
 
@@ -104,7 +116,7 @@
     <br>
     名前:<input id="tf1" value="" type="textfield">
     <br>
-    tweet:<input id="tf2" type="textfield">
+    tweet:<input id="tf2" size=50 type="textfield">
     <form action="test.html" method="post" enctype="multipart/form-data">
         <input type="file" name="test" required>
         <input type="submit" value="送信する">
@@ -118,6 +130,7 @@
     <button onclick="button3Pressed()">検索</button>
     <hr>
     <p id="result2">xxxx</p>
+    <p id="resultFollow"></p>
 
 </body>
 
