@@ -30,7 +30,7 @@
         }
 
         function init() {
-            var TweetName = sessionStorage.getItem('userid');
+            var TweetName = sessionStorage.getItem('id');
             document.getElementById('tf1').value = TweetName;
         }
 
@@ -92,7 +92,7 @@
 <body>
     <h1>みんなのツイート</h1>
     <br>
-    名前:<input id="tf1" value="名無し" type="textfield">
+    名前:<input id="tf1" value="" type="textfield">
     <br>
     tweet:<input id="tf2" type="textfield">
     <form action="test.html" method="post" enctype="multipart/form-data">
