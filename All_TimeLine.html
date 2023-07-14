@@ -32,6 +32,10 @@
         function init() {
             var TweetName = sessionStorage.getItem('id');
             document.getElementById('tf1').value = TweetName;
+
+            var username = sessionStorage.getItem('username');
+            document.getElementById('userLink').innerHTML = username;
+
         }
 
         async function doInsert() {
@@ -91,7 +95,7 @@
 
 <body>
     <h1>みんなのツイート</h1>
-    <p><a href="userpage.html">ユーザーページ</a></p>
+    <h2><a href="userpage.html" id="userLink"></a></h2>
     <br>
     名前:<input id="tf1" value="" type="textfield">
     <br>
