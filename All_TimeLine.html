@@ -25,6 +25,11 @@
             init();
         })
 
+        $().ready(async function () {
+            var username = sessionStorage.getItem('username');
+            document.getElementById('tf1').value = username;
+        })
+
         function button3Pressed() {
             doserch();
         }
@@ -40,7 +45,6 @@
 
         async function doInsert() {
             var username = sessionStorage.getItem('username');
-            document.getElementById('tf1').value = username;
             var tweet = document.getElementById('tf2').value;
 
             var sql = `insert into Tweets (name, tweet, time) values("${username}", "${tweet}", now());`;
