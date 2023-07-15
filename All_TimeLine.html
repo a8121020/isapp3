@@ -35,12 +35,12 @@
         }
 
         function init() {
-            var TweetName = sessionStorage.getItem('id');
-            document.getElementById('tf1').value = TweetName;
+            var UserId = sessionStorage.getItem('userid');
+            document.getElementById('tf1').value = UserId;
 
             var username = sessionStorage.getItem('username');
             //document.getElementById('userLink').innerHTML = username;
-            document.getElementById('userLink').innerHTML = '<a href="userpage.html?id=' + username + '">' + username + '</a>';
+            document.getElementById('userLink').innerHTML = '<a href="userpage.html?id=' + UserId + '">' + username + '</a>';
         }
 
         async function doInsert() {
