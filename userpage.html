@@ -24,7 +24,7 @@
             document.getElementById('userName').innerHTML = UserName;
         });
         async function Follow() {
-            var fromid = sessionStorage.getItem('userid');
+            var fromid = osql.getParam('id');
             var toid = osql.getParam('id');
             console.log(fromid);
             var sqlFollow = `select count(*) from Follows where fromid ="${fromid}"`;
