@@ -67,7 +67,8 @@
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
                 html = html + '<tr>';
-                html = html + '<td>' + object.id + '</td>'
+                //html = html + '<td>' + object.id + '</td>'
+                html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td>'
                 html = html + '<td>' + object.name + '</td>'
                 html = html + '<td>' + object.tweet + '</td>'
                 html = html + '<td>' + object.time + '</td>';
@@ -86,7 +87,7 @@
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
                 html = html + '<tr>';
-                html = html + '<td>' + object.id + '</td>'
+                //html = html + '<td>' + object.id + '</td>'
                 html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td>'
                 html = html + '<td>' + object.name + '</td>'
                 html = html + '<td>' + object.tweet + '</td>'
@@ -128,7 +129,7 @@
     <br>
     <p id="result1"></p>
 
-    <button onclick="button2Pressed()">X</button>
+    <!--<button onclick="button2Pressed()">X</button>-->
     tweet検索:<input id="tf3" type="textfield">
     <button onclick="button3Pressed()">検索</button>
     <hr>
