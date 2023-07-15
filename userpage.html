@@ -14,6 +14,7 @@
         $(document).ready(async function () {
             //var username = sessionStorage.getItem('username');
             var id = osql.getParam('id');
+            var MyId = sessionStorage.getItem('userid');
             document.getElementById('userName').innerHTML = id;
             Follow();
 
@@ -22,6 +23,13 @@
             var object = objects[0];
             UserName = object['name']
             document.getElementById('userName').innerHTML = UserName;
+
+            if (id == MyId) {
+                var html = '<button onclick="DeleteAccount(\'' + MyId + '\')">アカウント削除ボタン</button>'
+                document.getElementById('button').innerHTML = html
+            }
+
+
         });
         async function Follow() {
             var fromid = osql.getParam('id');
@@ -35,6 +43,24 @@
             var CountFollower = objectsFollower[0];
             document.getElementById("Follower").innerHTML = "フォロー:" + CountFollow['count(*)'];
             document.getElementById("Follow").innerHTML = "フォロワー:" + CountFollower['count(*)']
+        }
+        async function DeleteAccount(MyId) {
+            var MyId = sessionStorage.getItem('userid');
+            var ans = window.confirm("アカウントを削除します。よろしいですか？");
+            if (ans == true) {
+                var ans2 = window.confirm("本当によろしいですか？");
+                if (ans2 == true) {
+                    var DeleteFollowsFrom = `delete from Follows where fromid ="${MyId}"`;
+                    var DeleteFollowsTo = `delete from Follows where toid ="${MyId}"`;
+                    var DeleteUsers = `delete from Users where id ="${MyId}"`;
+                    var DeleteTweets = `delete from Tweets where studentid ="${MyId}"`;
+                    await osql.connect(DeleteFollowsFrom);
+                    await osql.connect(DeleteFollowsTo);
+                    await osql.connect(DeleteUsers);
+                    await osql.connect(DeleteTweets);
+                    document.getElementById('deleteResult').innerHTML = "アカウントを削除しました。またどこかで！"
+                }
+            }
         }
 
     </script>
@@ -51,6 +77,8 @@
         <h3 id="Follower"></h3>
         <h3 id="Follow"></h3>
         <p id="result"></p>
+        <p id="deleteResult"></p>
+        <p id="button"></p>
     </div>
     <hr>
     <h2>投稿</h2>
