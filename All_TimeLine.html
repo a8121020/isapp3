@@ -40,7 +40,7 @@
 
             var username = sessionStorage.getItem('username');
             //document.getElementById('userLink').innerHTML = username;
-            document.getElementById('userLink').innerHTML = '<a href="userpage.html?name=' + username + '">' + username + '</a>';
+            document.getElementById('userLink').innerHTML = '<a href="userpage.html?id=' + username + '">' + username + '</a>';
         }
 
         async function doInsert() {
@@ -87,7 +87,7 @@
                 var object = objects[i];
                 html = html + '<tr>';
                 html = html + '<td>' + object.id + '</td>'
-                html = html + '<td>' + '<a href="userpage.html?name=' + object.name + '">@' + object.studentid + '</a></td>'
+                html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td>'
                 html = html + '<td>' + object.name + '</td>'
                 html = html + '<td>' + object.tweet + '</td>'
                 html = html + '<td>' + object.time + '</td>';

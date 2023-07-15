@@ -13,17 +13,24 @@
 
         $(document).ready(async function () {
             //var username = sessionStorage.getItem('username');
-            var username = osql.getParam('name');
-            document.getElementById('userName').innerHTML = username;
+            var id = osql.getParam('id');
+            document.getElementById('userName').innerHTML = id;
             Follow();
 
+            var sql = `select name from Users where id ="${id}"`
+            var objects = await osql.connect(sql);
+            var object = objects[0];
+            UserName = object['name']
+            document.getElementById('userName').innerHTML = UserName;
         });
         async function Follow() {
             var userid = sessionStorage.getItem('userid');
             console.log(userid);
-            var sql = `select count(*) from Follows where fromid ="${userid}"`;
-            var object = await osql.connect(sql);
-            console.log(object);
+            var sqlFollow = `select count(*) from Follows where fromid ="${userid}"`;
+            var objects = await osql.connect(sqlFollow);
+            var object = objects[0];
+            document.getElementById("Follower").innerHTML = "フォロワー:";
+            document.getElementById("Follow").innerHTML = "フォロー:" + object['count(*)']
         }
 
     </script>
@@ -33,8 +40,12 @@
 <body>
     <h1 id="userName"></h1>
     <div>
+        <!---
         <h3 id="Follower">フォロワー：</h3>
         <h3 id="Follow">フォロー：</h3>
+        -->
+        <h3 id="Follower"></h3>
+        <h3 id="Follow"></h3>
         <p id="result"></p>
     </div>
     <hr>
