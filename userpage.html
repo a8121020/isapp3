@@ -15,6 +15,7 @@
             //var username = sessionStorage.getItem('username');
             var userid = osql.getParam('name');
             document.getElementById('userName').innerHTML = userid;
+
         });
 
 
@@ -49,8 +50,8 @@
 <body>
     <h1 id="userName"></h1>
     <div>
-        <h3>フォロワー：</h3>
-        <h3>フォロー：</h3>
+        <h3 id="Follower">フォロワー：</h3>
+        <h3 id="Follow">フォロー：</h3>
         <p id="result"></p>
     </div>
     <hr>
