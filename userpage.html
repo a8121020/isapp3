@@ -24,13 +24,17 @@
             document.getElementById('userName').innerHTML = UserName;
         });
         async function Follow() {
-            var userid = sessionStorage.getItem('userid');
-            console.log(userid);
-            var sqlFollow = `select count(*) from Follows where fromid ="${userid}"`;
+            var fromid = sessionStorage.getItem('userid');
+            var toid = osql.getParam('id');
+            console.log(fromid);
+            var sqlFollow = `select count(*) from Follows where fromid ="${fromid}"`;
+            var sqlFollower = `select count(*) from Follows where fromid ="${toid}"`;
             var objects = await osql.connect(sqlFollow);
+            var objects2 = await osql.connect(sqlFollower);
             var object = objects[0];
-            document.getElementById("Follower").innerHTML = "フォロワー:";
-            document.getElementById("Follow").innerHTML = "フォロー:" + object['count(*)']
+            var object2 = objects2[0];
+            document.getElementById("Follower").innerHTML = "フォロー:" + object2['count(*)'];
+            document.getElementById("Follow").innerHTML = "フォロワー:" + object['count(*)']
         }
 
     </script>
