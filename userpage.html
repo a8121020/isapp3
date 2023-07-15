@@ -25,16 +25,18 @@
             document.getElementById('userName').innerHTML = UserName;
 
             if (id == MyId) {
-                var html = '<button onclick="DeleteAccount(\'' + MyId + '\')">アカウント削除ボタン</button>'
-                document.getElementById('button').innerHTML = html
+                var html = '<button onclick="DeleteAccount(\'' + MyId + '\')">アカウント削除ボタン</button>';
+                document.getElementById('button').innerHTML = html;
             }
-
-
+            else if (id != MyId) {
+                var html = '<button onclick="FollowUser(\'' + MyId + '\')">フォローする</button>';
+                document.getElementById('button').innerHTML = html;
+            }
         });
+
         async function Follow() {
             var fromid = osql.getParam('id');
             var toid = osql.getParam('id');
-            console.log(fromid);
             var sqlFollow = `select count(*) from Follows where fromid ="${fromid}"`;
             var sqlFollower = `select count(*) from Follows where toid ="${toid}"`;
             var objectsFollow = await osql.connect(sqlFollow);
@@ -62,6 +64,15 @@
                 }
             }
         }
+        async function FollowUser(Followed) {
+            var Follower = sessionStorage.getItem('userid');
+            var ans = window.confirm("フォローしますか？");
+            if (ans == true) {
+                var sql = `insert into Follows (fromid,toid) values("${Follower}", "${Followed}")`;
+                var object = await osql.connect(sql);
+                document.getElementById("resultFollow").innerHTML = "フォローしました！"
+            }
+        }
 
     </script>
 
@@ -77,6 +88,7 @@
         <h3 id="Follower"></h3>
         <h3 id="Follow"></h3>
         <p id="result"></p>
+        <p id="resultFollow"></p>
         <p id="deleteResult"></p>
         <p id="button"></p>
     </div>
