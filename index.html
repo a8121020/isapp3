@@ -28,8 +28,8 @@
 
             sessionStorage.setItem('userid', objects[0].id);
             sessionStorage.setItem('username', objects[0].name);
-            console.log(objects[0].id);
-            location.href = 'TopTimeline.html';
+            var userid = sessionStorage.getItem('userid');
+            location.href = "TopTimeline.html?name=" + userid;
         }
 
         //<p style="text-align: right"><a href="admintop.html">管理者ページ</a></p>
