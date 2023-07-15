@@ -45,9 +45,10 @@
 
         async function doInsert() {
             var userid = sessionStorage.getItem('userid');
+            var username = sessionStorage.getItem('username');
             var tweet = document.getElementById('tf2').value;
 
-            var sql = `insert into Tweets (studentid,tweet, time) values("${userid}", "${tweet}", now());`;
+            var sql = `insert into Tweets (studentid,name,tweet, time) values("${userid}", "${username}","${tweet}", now());`;
             var objects = await osql.connect(sql);
             console.log(objects);
 
@@ -77,7 +78,6 @@
         }
 
         async function doSelect() {
-            var username = sessionStorage.getItem('username');
             var sql = 'select * from Tweets order by time desc limit 20';
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -87,7 +87,8 @@
                 var object = objects[i];
                 html = html + '<tr>';
                 html = html + '<td>' + object.id + '</td>'
-                html = html + '<td>' + '<a href="userpage.html?name=' + username + '">@' + object.studentid + '</a></td>'
+                html = html + '<td>' + '<a href="userpage.html?name=' + object.name + '">@' + object.studentid + '</a></td>'
+                html = html + '<td>' + object.name + '</td>'
                 html = html + '<td>' + object.tweet + '</td>'
                 html = html + '<td>' + object.time + '</td>';
                 html = html + '<td>' + '<button onclick="Follow(\'' + object.studentid + '\')">フォローする</button>' + '</td>';

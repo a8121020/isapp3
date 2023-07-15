@@ -12,37 +12,20 @@
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
 
         $(document).ready(async function () {
-            //var username = sessionStorage.getItem('username');
+            var username = sessionStorage.getItem('username');
             var userid = osql.getParam('name');
             document.getElementById('userName').innerHTML = userid;
+            Follow();
 
         });
-
-
-
-        /*
-        async function buttonPressed() {
-            var userid = document.getElementById('tf1').value;
-            var passward = document.getElementById('tf2').value;
-
-            var sql = `select * from Users where id="${userid}";`;
-            var objects = await osql.connect(sql);
-            if (objects.length <= 0) {
-                document.getElementById('result').innerHTML = 'ログイン失敗：ユーザが見つかりません';
-                return;
-            }
-            if (objects[0].passward != passward) {
-                document.getElementById('result').innerHTML = 'ログイン失敗：パスワードが違います';
-                return;
-            }
-
-            sessionStorage.setItem('userid', objects[0].id);
-            sessionStorage.setItem('username', objects[0].name);
-
-            location.href = 'Top_TimeLine.html';
+        async function Follow() {
+            var userid = sessionStorage.getItem('userid');
+            console.log(userid);
+            var sql = `select count(*) from Follows where fromid ="${userid}"`;
+            var object = await osql.connect(sql);
+            console.log(object);
         }
-        */
-        //<p style="text-align: right"><a href="admintop.html">管理者ページ</a></p>
+
     </script>
 
 </head>
