@@ -69,8 +69,8 @@
                 html = html + '<tr>';
                 //html = html + '<td>' + object.id + '</td>'
                 html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td>'
-                html = html + '<td>' + object.name + '</td>'
-                html = html + '<td>' + object.tweet + '</td>'
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.tweet + '</td>';
                 html = html + '<td>' + object.time + '</td>';
                 html = html + '</tr>';
             }
@@ -89,8 +89,9 @@
                 html = html + '<tr>';
                 //html = html + '<td>' + object.id + '</td>'
                 html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td>'
-                html = html + '<td>' + object.name + '</td>'
-                html = html + '<td>' + object.tweet + '</td>'
+                html = html + '<td>' + object.name + '</td>';
+                html = html + '<td>' + object.tweet + '</td>';
+                html = html + '<td>' + object.picture + '</td>';
                 html = html + '<td>' + object.time + '</td>';
                 html = html + '<td>' + '<button onclick="Follow(\'' + object.studentid + '\')">フォローする</button>' + '</td>';
                 html = html + '</tr>';
