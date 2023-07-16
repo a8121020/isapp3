@@ -32,6 +32,8 @@
                 var html = '<button onclick="FollowUser(\'' + id + '\')">フォローする</button>';
                 document.getElementById('button').innerHTML = html;
             }
+
+            MyTweet();
         });
 
         async function Follow() {
@@ -74,6 +76,25 @@
             }
         }
 
+        async function MyTweet() {
+            var MyId = sessionStorage.getItem('userid');
+            console.log(MyId);
+            var sql = `select * from Tweets where studentid = '${MyId}' ;`;
+            var objects = await osql.connect(sql);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                html = html + '<tr>';
+                var object = objects[i];
+                html = html + `<td>${object.tweet}</td>`;
+                html = html + `<td>${object.picture}</td>`;
+                html = html + `<td>${object.time}</td>`;
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('MyTL').innerHTML = html;
+        }
+
     </script>
 
 </head>
@@ -94,6 +115,7 @@
     </div>
     <hr>
     <h2>投稿</h2>
+    <div id="MyTL"></div>
     <hr>
 </body>
 
