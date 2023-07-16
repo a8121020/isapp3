@@ -9,8 +9,14 @@
     <script type="text/javascript" src="lib/osql.js"></script>
 
     <script>
-
-
+        osql.requireLogin();
+        $().ready(function () {
+            FollowPage();
+        })
+        function FollowPage() {
+            var id = osql.getParam('id');
+            document.getElementById('FollowPage').innerHTML = '<a href="Follow.html?id=' + id + '">フォローしている人のタイムライン</a>';
+        }
     </script>
 
 </head>
@@ -18,6 +24,7 @@
 <body>
     <h1>タイムライン分け</h1>
     <p><a href="All_TimeLine.html">タイムライン</a></p>
+    <p id="FollowPage"></p>
 </body>
 
 </html>
