@@ -18,7 +18,7 @@
         })
 
         async function FollowTweet() {
-            var sql = `select Users.id, Users.name, Tweets.tweet, Tweets.picture, Tweets.tweet,Tweets.time from (Users inner join Tweets on Users.id = Tweets.studentid)inner join Follows on Follows.toid = Tweets.studentid where Follows.fromid = "as"`
+            var sql = `select Users.id, Users.name, Tweets.tweet, Tweets.picture, Tweets.tweet,Tweets.time from (Users inner join Tweets on Users.id = Tweets.studentid)inner join Follows on Follows.toid = Tweets.studentid where Follows.fromid = "${UserId}"`
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = "";
