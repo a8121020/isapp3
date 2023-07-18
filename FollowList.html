@@ -16,17 +16,15 @@
         })
 
         $(document).ready(async function () {
-            //var username = sessionStorage.getItem('username');
             var id = osql.getParam('id');
-            var MyId = sessionStorage.getItem('userid');
             document.getElementById('userName').innerHTML = '@' + id;
-
         });
 
         async function followList() {
-            var MyId = sessionStorage.getItem('userid');
+            //var MyId = sessionStorage.getItem('userid');
+            var id = osql.getParam('id');
             //console.log(MyId);
-            var sql = `select toid from Follows where fromid = '${MyId}'`;
+            var sql = `select toid from Follows where fromid = '${id}'`;
             var objects = await osql.connect(sql);
             var html = '';
             html = html + '<table border="1">';
@@ -42,7 +40,8 @@
         }
 
         async function deleteFollow(Followed) {
-            var Follower = sessionStorage.getItem('userid');
+            //var Follower = sessionStorage.getItem('userid');
+            var Follower = osql.getParam('id');
             var sql = `select toid from Follows where fromid = '${Follower}'`;
             var objects = await osql.connect(sql);
 

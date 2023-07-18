@@ -48,7 +48,7 @@
             var CountFollow = objectsFollow[0];
             var CountFollower = objectsFollower[0];
             //document.getElementById('Follower').innerHTML = '<a href="FollowList.html?id=' + MyId + '">' + 'フォロー' + '</a>';
-            document.getElementById("Follower").innerHTML = '<a href="FollowList.html?id=' + MyId + '">' + "フォロー:" + '</a>' + CountFollow['count(*)'];
+            document.getElementById("Follower").innerHTML = '<a href="FollowList.html?id=' + fromid + '">' + "フォロー:" + '</a>' + CountFollow['count(*)'];
             document.getElementById("Follow").innerHTML = "フォロワー:" + CountFollower['count(*)']
         }
 
