@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
+
+        $().ready(function () {
+            setInterval(followList, 2000);
+        })
+
+        $(document).ready(async function () {
+            var id = osql.getParam('id');
+            document.getElementById('userName').innerHTML = '@' + id;
+        });
+
+        async function followList() {
+            var id = osql.getParam('id');
+            //console.log(MyId);
+            var sql = `select fromid from Follows where toid = '${id}'`;
+            var objects = await osql.connect(sql);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                var MyId = sessionStorage.getItem('userid');
+
+                var MyfollowBack = `select count(*) as count from Follows where fromid = "${MyId}" and toid = "${object.fromid}";`;
+                var MyfollowBackResult = await osql.connect(MyfollowBack);
+
+                var followBack = `select count(*) as count from Follows where fromid = "${id}" and toid = "${object.fromid}";`;
+                var followBackResult = await osql.connect(followBack);
+                var count = MyfollowBackResult[0].count;
+
+                html = html + '<tr>';
+                html = html + `<td>${object.fromid}</td>`;
+                if (count > 0) {
+                    html = html + '<td>' + 'フォロー中' + '</td>';
+                } else if () {
+                    html = html + '<td></td>';
+                } else {
+                    html = html + '<td>' + '<button onclick="newFollow(\'' + object.fromid + '\')">フォロー</button>' + '</td>';
+                }
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('myFollower').innerHTML = html;
+        }
+
+        async function newFollow(Follower) {
+            /*
+            var Followed = osql.getParam('id');
+            var sql = `select toid from Follows where fromid = '${Follower}'`;
+            var objects = await osql.connect(sql);
+
+            var answer = window.confirm("フォロー解除しますか？");
+            if (answer == true) {
+                var sql = `delete from Follows where fromid = "${Follower}" and toid = "${Followed}"`;
+                var object = await osql.connect(sql);
+                document.getElementById("result").innerHTML = "フォロー解除しました"
+            }
+            */
+            var Follower = sessionStorage.getItem('userid');
+            var ans = window.confirm("フォローしますか？");
+            if (Follower != Followed && ans == true) {
+                var sql = `insert into Follows (fromid,toid) values("${Follower}", "${Followed}")`;
+                var object = await osql.connect(sql);
+                document.getElementById("resultFollow").innerHTML = "フォローしました！"
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <h2 id="userName"></h2>
+    <h2>フォロワー</h2>
+    <hr>
+    <div id="myFollower">読み込み中</div>
+    <p id="result"></p>
+</body>
+
+</html>
