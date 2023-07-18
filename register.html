@@ -20,11 +20,16 @@
             var passward = document.getElementById('tf2').value;
             var username = document.getElementById('tf3').value;
 
-            var sql = `insert into Users (id, passward, name) values("${userid}", "${passward}", "${username}");`;
-            var objects = await osql.connect(sql);
-            console.log(objects);
+            var serchUserid = `select count(*) as count from Users where id = "${userid}";`;
+            if (serchUserid > 0) {
+                var sql = `insert into Users (id, passward, name) values("${userid}", "${passward}", "${username}");`;
+                var objects = await osql.connect(sql);
+                console.log(objects);
+                document.getElementById('result').innerHTML = 'OK';
+            } else {
+                document.getElementById('result').innerHTML = '同一のuseridが存在します。変更してください。'
+            }
 
-            document.getElementById('result').innerHTML = 'OK';
         }
     </script>
 
