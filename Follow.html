@@ -10,8 +10,15 @@
 
     <script>
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
+        var UserId = osql.getParam('id');
 
-
+        console.log(UserId);
+        async function FollowTweet() {
+            var sql = ` select Users.id, Users.name, Follows.toid, Tweets.tweet, Tweets.pic Tweets.tweet, from (Users inner join Tweets on Users.id = Tweets.studentid)
+        inner join Follows on Follows.toid = Tweets.studentid where Follows.fromid = "${UserId}"`;
+            var objects = await osql.connect('sql');
+            console.log(objects);
+        }
     </script>
 
 </head>
