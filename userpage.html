@@ -63,6 +63,7 @@
                     await osql.connect(DeleteUsers);
                     await osql.connect(DeleteTweets);
                     document.getElementById('deleteResult').innerHTML = "アカウントを削除しました。またどこかで！"
+                    location.href = "index.html";
                 }
             }
         }
