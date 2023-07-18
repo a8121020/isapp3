@@ -21,6 +21,7 @@
         });
 
         async function followList() {
+            var MyIdSession = sessionStorage.getItem('userid');
             var id = osql.getParam('id');
             //console.log(MyId);
             var sql = `select toid from Follows where fromid = '${id}'`;
@@ -31,7 +32,7 @@
                 html = html + '<tr>';
                 var object = objects[i];
                 html = html + `<td>${object.toid}</td>`;
-                if (MyIdSession == MyId) {
+                if (MyIdSession == id) {
                     html = html + '<td>' + '<button onclick="deleteFollow(\'' + object.toid + '\')">フォロー解除</button>' + '</td>';
                 }
                 html = html + '</tr>';
