@@ -78,6 +78,8 @@
         }
 
         async function doSelect() {
+            var User = sessionStorage.getItem('userid');
+            console.log("ログインしている人のId" + User);
             var sql = 'select * from Tweets order by time desc limit 20';
             var objects = await osql.connect(sql);
             console.log(objects);
@@ -92,7 +94,9 @@
                 html = html + '<td>' + object.tweet + '</td>';
                 html = html + '<td>' + object.picture + '</td>';
                 html = html + '<td>' + object.time + '</td>';
-                html = html + '<td>' + '<button onclick="Follow(\'' + object.studentid + '\')">フォローする</button>' + '</td>';
+                if (User != object.studentid) {
+                    html = html + '<td>' + '<button onclick="Follow(\'' + object.studentid + '\')">フォローする</button>' + '</td>';
+                }
                 html = html + '</tr>';
             }
             html = html + '</table>';
@@ -102,9 +106,7 @@
         async function Follow(Followed) {
             var Follower = sessionStorage.getItem('userid');
             var ans = window.confirm("フォローしますか？");
-            if (Follower == Followed) {
-                document.getElementById("resultFollow").innerHTML = "自分をフォローしようとしています"
-            } else if (Follower != Followed && ans == true) {
+            if (Follower != Followed && ans == true) {
                 var sql = `insert into Follows (fromid,toid) values("${Follower}", "${Followed}")`;
                 var object = await osql.connect(sql);
                 document.getElementById("resultFollow").innerHTML = "フォローしました！"
