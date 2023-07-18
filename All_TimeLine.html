@@ -113,48 +113,47 @@
             }
         }
 
-        /*
+
         function handleProgress(evt) {
-                var p = Math.floor((evt.loaded / evt.total) * 1000) / 10;
-                if (p == 100) {
-                    $("#message").text('サーバ処理中（アップロードは完了しましたが，しばらくお待ちください）');
-                    return;
-                }
-                msg = `${p} % uploaded (${Math.floor(evt.loaded / 1000000)}MB of ${Math.floor(evt.total / 1000000)}MB)`;
-                $("#message").text(msg);
+            var p = Math.floor((evt.loaded / evt.total) * 1000) / 10;
+            if (p == 100) {
+                $("#message").text('サーバ処理中（アップロードは完了しましたが，しばらくお待ちください）');
+                return;
+            }
+            msg = `${p} % uploaded (${Math.floor(evt.loaded / 1000000)}MB of ${Math.floor(evt.total / 1000000)}MB)`;
+            $("#message").text(msg);
+        }
+
+        async function upload() {
+            $(".message").text('');
+            const file = document.getElementById('file').files[0];
+            if (file === undefined) {
+                alert('ファイルが選択されていません');
+                return;
             }
 
-            async function upload() {
-                $(".message").text('');
-                const file = document.getElementById('file').files[0];
-                if (file === undefined) {
-                    alert('ファイルが選択されていません');
-                    return;
-                }
+            const form_data = new FormData();
+            form_data.append("file", file);
+            var res = await osql.uploadFile(form_data, 'drink', handleProgress);
+            if (res.status != 200) {
+                console.error(res);
+                $("#message").text('アップロードに失敗しました');
+                return;
+            }
 
-                const form_data = new FormData();
-                form_data.append("file", file);
-                var res = await osql.uploadFile(form_data, 'drink', handleProgress);
-                if (res.status != 200) {
-                    console.error(res);
-                    $("#message").text('アップロードに失敗しました');
-                    return;
-                }
+            var name = res.name;
+            var webpath = res.webpath;
+            var PictureURL = `${osql.baseurl}/${webpath}`;
+            var userid = sessionStorage.getItem('userid');
+            var username = sessionStorage.getItem('username');
+            var tweet = document.getElementById('tf2').value;
 
-                var name = res.name;
-                var webpath = res.webpath;
-                var moviePath = webpath;
-                //var PicturePath = webpath;
-                var movieURL = `${osql.baseurl}/${moviePath}`;
-                var PictureURL =  `${osql.baseurl}/${PicturePath}`;
+            //var sql = `update Sessions set moviePath="${moviePath}", movieURL="${movieURL}" where id=${sessionId};`;
+            var sql = `insert into Tweets (studentid,name,tweet, time) values("${userid}", "${username}","${PictureURL}", now());`;
+            var res2 = await osql.connect(sql);
 
-                //var sql = `update Sessions set moviePath="${moviePath}", movieURL="${movieURL}" where id=${sessionId};`;
-                //var sql = `insert into Tweets (studentid,name,tweet, picture, time) values("${userid}", "${username}","${tweet}", PictureURL,now());`;
-                var res2 = await osql.connect(sql);
-
-                $("#message").text('完了しました．');
-            };
-            */
+            $("#message").text('完了しました．');
+        };
     </script>
 
 </head>
@@ -169,6 +168,7 @@
     tweet:<input id="tf2" size=50 type="textfield">
     <hr>
     <input id="file" type="file" name="file">
+    <button onclick="upload()">ボタン</button>
     <br>
     <button onclick="button1Pressed()">tweet</button>
     <br>
@@ -181,6 +181,7 @@
     <hr>
     <p id="result2">読み込み中</p>
     <p id="resultFollow"></p>
+    <p id="message"></p>
 
 </body>
 
