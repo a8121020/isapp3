@@ -15,7 +15,7 @@
             //var username = sessionStorage.getItem('username');
             var id = osql.getParam('id');
             var MyId = sessionStorage.getItem('userid');
-            document.getElementById('userName').innerHTML = id;
+            document.getElementById('userId').innerHTML = '@' + id;
             Follow();
 
             var sql = `select name from Users where id ="${id}"`
@@ -114,7 +114,8 @@
 </head>
 
 <body>
-    <h1 id="userName"></h1>
+    <h1 id="userId"></h1>
+    <h2 id="userName"></h2>
     <div>
         <!---
         <h3 id="Follower">フォロワー：</h3>
