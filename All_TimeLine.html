@@ -112,6 +112,47 @@
                 document.getElementById("resultFollow").innerHTML = "フォローしました！"
             }
         }
+
+        /*
+        function handleProgress(evt) {
+                var p = Math.floor((evt.loaded / evt.total) * 1000) / 10;
+                if (p == 100) {
+                    $("#message").text('サーバ処理中（アップロードは完了しましたが，しばらくお待ちください）');
+                    return;
+                }
+                msg = `${p} % uploaded (${Math.floor(evt.loaded / 1000000)}MB of ${Math.floor(evt.total / 1000000)}MB)`;
+                $("#message").text(msg);
+            }
+
+            async function upload() {
+                $(".message").text('');
+                const file = document.getElementById('file').files[0];
+                if (file === undefined) {
+                    alert('ファイルが選択されていません');
+                    return;
+                }
+
+                const form_data = new FormData();
+                form_data.append("file", file);
+                var res = await osql.uploadFile(form_data, 'tetro', handleProgress);
+                if (res.status != 200) {
+                    console.error(res);
+                    $("#message").text('アップロードに失敗しました');
+                    return;
+                }
+
+                var name = res.name;
+                var webpath = res.webpath;
+                var moviePath = webpath;
+                var movieURL = `${osql.baseurl}/${moviePath}`;
+                var sql = `update Sessions set moviePath="${moviePath}", movieURL="${movieURL}" where id=${sessionId};`;
+                var res2 = await osql.connect(sql);
+
+                $("#message").text('完了しました．');
+            };
+
+            <input id="file" type="file" name="file">
+            */
     </script>
 
 </head>
