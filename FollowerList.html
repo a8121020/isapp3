@@ -33,16 +33,16 @@
 
                 var MyfollowBack = `select count(*) as count from Follows where fromid = "${MyId}" and toid = "${object.fromid}";`;
                 var MyfollowBackResult = await osql.connect(MyfollowBack);
+                var count = MyfollowBackResult[0].count;
 
                 var followBack = `select count(*) as count from Follows where fromid = "${id}" and toid = "${object.fromid}";`;
                 var followBackResult = await osql.connect(followBack);
-                var count = MyfollowBackResult[0].count;
 
                 html = html + '<tr>';
                 html = html + `<td>${object.fromid}</td>`;
                 if (count > 0) {
                     html = html + '<td>' + 'フォロー中' + '</td>';
-                } else if () {
+                } else if (object.fromid == MyId) {
                     html = html + '<td></td>';
                 } else {
                     html = html + '<td>' + '<button onclick="newFollow(\'' + object.fromid + '\')">フォロー</button>' + '</td>';
@@ -53,25 +53,13 @@
             document.getElementById('myFollower').innerHTML = html;
         }
 
-        async function newFollow(Follower) {
-            /*
-            var Followed = osql.getParam('id');
-            var sql = `select toid from Follows where fromid = '${Follower}'`;
-            var objects = await osql.connect(sql);
-
-            var answer = window.confirm("フォロー解除しますか？");
-            if (answer == true) {
-                var sql = `delete from Follows where fromid = "${Follower}" and toid = "${Followed}"`;
-                var object = await osql.connect(sql);
-                document.getElementById("result").innerHTML = "フォロー解除しました"
-            }
-            */
+        async function newFollow(Followed) {
             var Follower = sessionStorage.getItem('userid');
             var ans = window.confirm("フォローしますか？");
             if (Follower != Followed && ans == true) {
                 var sql = `insert into Follows (fromid,toid) values("${Follower}", "${Followed}")`;
                 var object = await osql.connect(sql);
-                document.getElementById("resultFollow").innerHTML = "フォローしました！"
+                document.getElementById("result").innerHTML = "フォローしました！"
             }
         }
 
