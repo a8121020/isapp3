@@ -36,18 +36,23 @@
             MyTweet();
         });
 
+        //フォロー関連表示
         async function Follow() {
             var fromid = osql.getParam('id');
             var toid = osql.getParam('id');
+            var MyId = sessionStorage.getItem('userid');
             var sqlFollow = `select count(*) from Follows where fromid ="${fromid}"`;
             var sqlFollower = `select count(*) from Follows where toid ="${toid}"`;
             var objectsFollow = await osql.connect(sqlFollow);
             var objectsFollower = await osql.connect(sqlFollower);
             var CountFollow = objectsFollow[0];
             var CountFollower = objectsFollower[0];
-            document.getElementById("Follower").innerHTML = "フォロー:" + CountFollow['count(*)'];
+            //document.getElementById('Follower').innerHTML = '<a href="FollowList.html?id=' + MyId + '">' + 'フォロー' + '</a>';
+            document.getElementById("Follower").innerHTML = '<a href="FollowList.html?id=' + MyId + '">' + "フォロー:" + '</a>' + CountFollow['count(*)'];
             document.getElementById("Follow").innerHTML = "フォロワー:" + CountFollower['count(*)']
         }
+
+        //アカウント削除
         async function DeleteAccount(MyId) {
             var MyId = sessionStorage.getItem('userid');
             var ans = window.confirm("アカウントを削除します。よろしいですか？");
@@ -66,6 +71,8 @@
                 }
             }
         }
+
+        //他ユーザーのページに富んだ場合のフォローボタン
         async function FollowUser(Followed) {
             var Follower = sessionStorage.getItem('userid');
             var ans = window.confirm("フォローしますか？");
@@ -76,6 +83,7 @@
             }
         }
 
+        //自分の投稿
         async function MyTweet() {
             var MyId = sessionStorage.getItem('userid');
             console.log(MyId);
