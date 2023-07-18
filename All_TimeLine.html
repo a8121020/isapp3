@@ -149,7 +149,7 @@
             var tweet = document.getElementById('tf2').value;
 
             //var sql = `update Sessions set moviePath="${moviePath}", movieURL="${movieURL}" where id=${sessionId};`;
-            var sql = `insert into Tweets (studentid,name,tweet, time) values("${userid}", "${username}","${PictureURL}", now());`;
+            var sql = `insert into Tweets(studentid, name, tweet, time) values('${userid}', '${username}', '<img src = "${PictureURL}" width="100px">', now());`;
             var res2 = await osql.connect(sql);
 
             $("#message").text('完了しました．');
