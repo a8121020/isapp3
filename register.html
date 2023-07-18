@@ -22,12 +22,14 @@
 
             var serchUserid = `select count(*) as count from Users where id = "${userid}";`;
             if (serchUserid > 0) {
+
+                document.getElementById('result').innerHTML = '同一のuseridが存在します。変更してください。'
+            } else {
+                document.getElementById('result').innerHTML = '同一のuseridが存在します。変更してください。'
                 var sql = `insert into Users (id, passward, name) values("${userid}", "${passward}", "${username}");`;
                 var objects = await osql.connect(sql);
                 console.log(objects);
                 document.getElementById('result').innerHTML = 'OK';
-            } else {
-                document.getElementById('result').innerHTML = '同一のuseridが存在します。変更してください。'
             }
 
         }
