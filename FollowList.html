@@ -24,7 +24,8 @@
         });
 
         async function followList() {
-            var MyId = sessionStorage.getItem('userid');
+            //var MyId = sessionStorage.getItem('userid');
+            var MyId = osql.getParam('id');
             //console.log(MyId);
             var sql = `select toid from Follows where fromid = '${MyId}'`;
             var objects = await osql.connect(sql);
