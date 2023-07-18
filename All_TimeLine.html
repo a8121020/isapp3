@@ -7,6 +7,7 @@
 
     <script type="text/javascript" src="lib/jquery.min.js"></script>
     <script type="text/javascript" src="lib/osql.js"></script>
+    <link rel="stylesheet" href="mystyle.css">
 
     <script>
         //ユーザー名を変えられないようにグレーアウト
@@ -49,7 +50,6 @@
 
             var sql = `insert into Tweets (studentid,name,tweet, time) values("${userid}", "${username}","${tweet}", now());`;
             var objects = await osql.connect(sql);
-            console.log(objects);
 
             document.getElementById('result1').innerHTML = "tweetしました";
 
@@ -79,10 +79,9 @@
 
         async function doSelect() {
             var User = sessionStorage.getItem('userid');
-            console.log("ログインしている人のId" + User);
             var sql = 'select * from Tweets order by time desc limit 20';
             var objects = await osql.connect(sql);
-            console.log(objects);
+
             var html = '';
             html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
@@ -168,9 +167,9 @@
     tweet:<input id="tf2" size=50 type="textfield">
     <hr>
     <input id="file" type="file" name="file">
-    <button onclick="upload()">ボタン</button>
+    <button onclick="upload()">投稿</button>
     <br>
-    <button onclick="button1Pressed()">tweet</button>
+    <!--<button onclick="button1Pressed()">tweet</button>-->
     <br>
     <hr>
     <p id="result1"></p>
