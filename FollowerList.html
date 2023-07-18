@@ -34,9 +34,10 @@
                 var MyfollowBack = `select count(*) as count from Follows where fromid = "${MyId}" and toid = "${object.fromid}";`;
                 var MyfollowBackResult = await osql.connect(MyfollowBack);
                 var count = MyfollowBackResult[0].count;
-
+                /*
                 var followBack = `select count(*) as count from Follows where fromid = "${id}" and toid = "${object.fromid}";`;
                 var followBackResult = await osql.connect(followBack);
+                */
 
                 html = html + '<tr>';
                 html = html + `<td>${object.fromid}</td>`;

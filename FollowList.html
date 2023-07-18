@@ -29,11 +29,19 @@
             var html = '';
             html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
-                html = html + '<tr>';
                 var object = objects[i];
+                var MyfollowBack = `select count(*) as count from Follows where fromid = "${MyIdSession}" and toid = "${object.fromid}";`;
+                var MyfollowBackResult = await osql.connect(MyfollowBack);
+                var count = MyfollowBackResult[0].count;
+
+                html = html + '<tr>';
                 html = html + `<td>${object.toid}</td>`;
                 if (MyIdSession == id) {
                     html = html + '<td>' + '<button onclick="deleteFollow(\'' + object.toid + '\')">フォロー解除</button>' + '</td>';
+                } else if (object.fromid == MyIdSession) {
+                    html = html + '<td></td>';
+                } else {
+                    html = html + '<td>' + '<button onclick="newFollow(\'' + object.fromid + '\')">フォロー</button>' + '</td>';
                 }
                 html = html + '</tr>';
             }
