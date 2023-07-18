@@ -81,18 +81,23 @@
             console.log(MyId);
             var sql = `select * from Tweets where studentid = '${MyId}' ;`;
             var objects = await osql.connect(sql);
-            var html = '';
-            html = html + '<table border="1">';
-            for (var i = 0; i < objects.length; i++) {
-                html = html + '<tr>';
-                var object = objects[i];
-                html = html + `<td>${object.tweet}</td>`;
-                html = html + `<td>${object.picture}</td>`;
-                html = html + `<td>${object.time}</td>`;
-                html = html + '</tr>';
+            console.log(objects);
+            if (objects.length == 0) {
+                document.getElementById('MyTL').innerHTML = "まだ何も投稿していないよ。";
+            } else {
+                var html = '';
+                html = html + '<table border="1">';
+                for (var i = 0; i < objects.length; i++) {
+                    html = html + '<tr>';
+                    var object = objects[i];
+                    html = html + `<td>${object.tweet}</td>`;
+                    html = html + `<td>${object.picture}</td>`;
+                    html = html + `<td>${object.time}</td>`;
+                    html = html + '</tr>';
+                }
+                html = html + '</table>';
+                document.getElementById('MyTL').innerHTML = html;
             }
-            html = html + '</table>';
-            document.getElementById('MyTL').innerHTML = html;
         }
 
     </script>
