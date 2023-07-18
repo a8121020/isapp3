@@ -89,7 +89,7 @@
             //var MyId = sessionStorage.getItem('userid');
             var id = osql.getParam('id');
             console.log(id);
-            var sql = `select * from Tweets where studentid = '${id}' ;`;
+            var sql = `select * from Tweets where studentid = '${id}'order by time desc;`;
             var objects = await osql.connect(sql);
             console.log(objects);
             if (objects.length == 0) {
