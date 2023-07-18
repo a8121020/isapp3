@@ -20,24 +20,27 @@
         async function FollowTweet() {
             var sql = `select Users.id, Users.name, Tweets.tweet, Tweets.picture, Tweets.tweet,Tweets.time from (Users inner join Tweets on Users.id = Tweets.studentid)inner join Follows on Follows.toid = Tweets.studentid where Follows.fromid = "${UserId}"`
             var objects = await osql.connect(sql);
-            console.log(objects);
             var html = "";
             var Tweet = "Tweets.tweet";
             html = html + '<table border="1">';
-            for (var i = 0; i < objects.length; i++) {
-                var object = objects[i];
-                html = html + '<tr>';
-                //html = html + '<td>' + object.id + '</td>'
-                html = html + '<td>' + '<a href="userpage.html?id=' + object.id + '">@' + object.id + '</a></td>'
-                html = html + '<td>' + object.name + '</td>';
-                html = html + '<td>' + object[Tweet] + '</td>';
-                html = html + '<td>' + object.picture + '</td>';
-                html = html + '<td>' + object.time + '</td>';
-                html = html + '</tr>';
-                console.log(object);
+            console.log(objects);
+            if (objects.length == 0) {
+                document.getElementById('FollowTweet').innerHTML = "まだ誰もフォローしていないよ";
+            } else {
+                for (var i = 0; i < objects.length; i++) {
+                    var object = objects[i];
+                    html = html + '<tr>';
+                    //html = html + '<td>' + object.id + '</td>'
+                    html = html + '<td>' + '<a href="userpage.html?id=' + object.id + '">@' + object.id + '</a></td>'
+                    html = html + '<td>' + object.name + '</td>';
+                    html = html + '<td>' + object[Tweet] + '</td>';
+                    html = html + '<td>' + object.picture + '</td>';
+                    html = html + '<td>' + object.time + '</td>';
+                    html = html + '</tr>';
+                }
+                html = html + '</table>';
+                document.getElementById('FollowTweet').innerHTML = html;
             }
-            html = html + '</table>';
-            document.getElementById('FollowTweet').innerHTML = html;
         }
 
     </script>
