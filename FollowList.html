@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <script type="text/javascript" src="lib/jquery.min.js"></script>
+    <script type="text/javascript" src="lib/osql.js"></script>
+
+    <script>
+        osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
+
+        $().ready(function () {
+            setInterval(followList, 2000);
+        })
+
+        $(document).ready(async function () {
+            //var username = sessionStorage.getItem('username');
+            var id = osql.getParam('id');
+            var MyId = sessionStorage.getItem('userid');
+            document.getElementById('userName').innerHTML = '@' + id;
+
+        });
+
+        async function followList() {
+            var MyId = sessionStorage.getItem('userid');
+            //console.log(MyId);
+            var sql = `select toid from Follows where fromid = '${MyId}'`;
+            var objects = await osql.connect(sql);
+            var html = '';
+            html = html + '<table border="1">';
+            for (var i = 0; i < objects.length; i++) {
+                html = html + '<tr>';
+                var object = objects[i];
+                html = html + `<td>${object.toid}</td>`;
+                html = html + '<td>' + '<button onclick="deleteFollow(\'' + object.toid + '\')">フォロー解除</button>' + '</td>';
+                html = html + '</tr>';
+            }
+            html = html + '</table>';
+            document.getElementById('myFollow').innerHTML = html;
+        }
+
+        async function deleteFollow(Followed) {
+            var Follower = sessionStorage.getItem('userid');
+            var sql = `select toid from Follows where fromid = '${Follower}'`;
+            var objects = await osql.connect(sql);
+
+            var answer = window.confirm("フォロー解除しますか？");
+            if (answer == true) {
+                var sql = `delete from Follows where fromid = "${Follower}" and toid = "${Followed}"`;
+                var object = await osql.connect(sql);
+                document.getElementById("result").innerHTML = "フォロー解除しました"
+            }
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <h2 id="userName"></h2>
+    <h2>フォロー中</h2>
+    <hr>
+    <div id="myFollow">読み込み中</div>
+    <p id="result"></p>
+</body>
+
+</html>

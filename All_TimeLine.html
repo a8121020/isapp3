@@ -39,7 +39,6 @@
             document.getElementById('tf1').value = UserId;
 
             var username = sessionStorage.getItem('username');
-            //document.getElementById('userLink').innerHTML = username;
             document.getElementById('userLink').innerHTML = '<a href="userpage.html?id=' + UserId + '">' + username + '</a>';
         }
 
@@ -103,6 +102,7 @@
             html = html + '</table>';
             document.getElementById('result2').innerHTML = html;
         }
+
         async function Follow(Followed) {
             var Follower = sessionStorage.getItem('userid');
             var ans = window.confirm("フォローしますか？");
@@ -136,7 +136,7 @@
     tweet検索:<input id="tf3" type="textfield">
     <button onclick="button3Pressed()">検索</button>
     <hr>
-    <p id="result2">xxxx</p>
+    <p id="result2">読み込み中</p>
     <p id="resultFollow"></p>
 
 </body>
