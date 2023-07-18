@@ -86,9 +86,10 @@
 
         //自分の投稿
         async function MyTweet() {
-            var MyId = sessionStorage.getItem('userid');
-            console.log(MyId);
-            var sql = `select * from Tweets where studentid = '${MyId}' ;`;
+            //var MyId = sessionStorage.getItem('userid');
+            var id = osql.getParam('id');
+            console.log(id);
+            var sql = `select * from Tweets where studentid = '${id}' ;`;
             var objects = await osql.connect(sql);
             console.log(objects);
             if (objects.length == 0) {
