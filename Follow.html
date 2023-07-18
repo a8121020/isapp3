@@ -22,6 +22,7 @@
             var objects = await osql.connect(sql);
             console.log(objects);
             var html = "";
+            var Tweet = "Tweets.tweet";
             html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
@@ -29,10 +30,11 @@
                 //html = html + '<td>' + object.id + '</td>'
                 html = html + '<td>' + '<a href="userpage.html?id=' + object.id + '">@' + object.id + '</a></td>'
                 html = html + '<td>' + object.name + '</td>';
-                html = html + '<td>' + object.tweet + '</td>';
+                html = html + '<td>' + object[Tweet] + '</td>';
                 html = html + '<td>' + object.picture + '</td>';
                 html = html + '<td>' + object.time + '</td>';
                 html = html + '</tr>';
+                console.log(object);
             }
             html = html + '</table>';
             document.getElementById('FollowTweet').innerHTML = html;
