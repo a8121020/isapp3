@@ -18,9 +18,9 @@
             doInsert();
         }
 
-        var timer = setInterval(doSelect, 2000);
         $().ready(function () {
-            timer;
+            doSelect();
+            //setInterval(doSelect, 2000);
         })
 
         $().ready(function () {
@@ -33,7 +33,11 @@
         })
 
         function button3Pressed() {
-            doserch();
+            doSerch();
+        }
+
+        function buttonReload() {
+            doSelect();
         }
 
         function init() {
@@ -58,8 +62,7 @@
         }
 
         //検索
-        async function doserch() {
-            clearInterval(timer);
+        async function doSerch() {
             var User = sessionStorage.getItem('userid');
             var tweet = document.getElementById('tf3').value;
             var sql = 'select * from Tweets where tweet like "%' + tweet + '%"';
@@ -206,6 +209,7 @@
 
 <body>
     <div class="Center">
+        <button onclick="buttonReload()">更新</button>
         <h1>みんなの飲み物</h1>
         <!--<h2><a href="userpage.html" id="userLink"></a></h2>-->
         <h2 id="userLink"></h2>

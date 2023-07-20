@@ -1,21 +1,21 @@
-body{
-    background-color:lightgoldenrodyellow;
-    margin:0px 500px 0px 500px;
+body {
+    background-color: lightgoldenrodyellow;
+    margin: 50px 500px 0px 500px;
 }
 
-table{
-    width:30%;
+table {
+    width: 30%;
 }
 
-.PictureWidth{
-    width:100px;
+.PictureWidth {
+    width: 100px;
 }
 
-.Center{
-    text-align:center;
+.Center {
+    text-align: center;
 }
 
-table{
-    text-align:center;
+table {
+    text-align: center;
     margin: auto;
 }
