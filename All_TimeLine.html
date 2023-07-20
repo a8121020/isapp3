@@ -20,7 +20,6 @@
 
         $().ready(function () {
             doSelect();
-            //setInterval(doSelect, 2000);
         })
 
         $().ready(function () {
@@ -109,7 +108,7 @@
         //ツイート
         async function doSelect() {
             var User = sessionStorage.getItem('userid');
-            var sql = 'select * from Tweets order by time desc limit 20';
+            var sql = 'select * from Tweets order by time desc limit 30';
             var objects = await osql.connect(sql);
             var id = osql.getParam('id');
 

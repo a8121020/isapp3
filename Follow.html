@@ -18,8 +18,12 @@
             FollowTweet();
         })
 
+        function buttonReload() {
+            FollowTweet();
+        }
+
         async function FollowTweet() {
-            var sql = `select Users.id, Users.name, Tweets.tweet, Tweets.picture, Tweets.tweet,Tweets.time from (Users inner join Tweets on Users.id = Tweets.studentid)inner join Follows on Follows.toid = Tweets.studentid where Follows.fromid = "${UserId}"`
+            var sql = `select Users.id, Users.name, Tweets.tweet, Tweets.picture, Tweets.tweet,Tweets.time from (Users inner join Tweets on Users.id = Tweets.studentid)inner join Follows on Follows.toid = Tweets.studentid where Follows.fromid = "${UserId}" order by time desc`
             var objects = await osql.connect(sql);
             var html = "";
             var Tweet = "Tweets.tweet";
@@ -51,6 +55,7 @@
 
 <body>
     <div class="Center">
+        <button onclick="buttonReload()">更新</button>
         <h2>フォローしている人のタイムライン</h2>
         <hr>
         <p id="FollowTweet"></p>
