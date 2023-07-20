@@ -18,8 +18,9 @@
             doInsert();
         }
 
+        var timer = setInterval(doSelect, 2000);
         $().ready(function () {
-            setInterval(doSelect, 2000);
+            timer;
         })
 
         $().ready(function () {
@@ -58,20 +59,44 @@
 
         //検索
         async function doserch() {
+            clearInterval(timer);
+            var User = sessionStorage.getItem('userid');
             var tweet = document.getElementById('tf3').value;
             var sql = 'select * from Tweets where tweet like "%' + tweet + '%"';
             var objects = await osql.connect(sql);
+
+            var followSql = `select toid from Follows where fromid = '${User}'`;
+            var followObjects = await osql.connect(followSql);
+
             console.log(objects);
             var html = '';
-            html = html + '<table border="1">';
+            html = html + '<div class="Center"><table border="1">';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
                 html = html + '<tr>';
                 //html = html + '<td>' + object.id + '</td>'
-                html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td>'
-                html = html + '<td>' + object.name + '</td>';
-                html = html + '<td>' + object.tweet + '</td>';
-                html = html + '<td>' + object.time + '</td>';
+                html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a>'
+                //html = html + '<td>' + object.name + '</td>';
+                html = html + '<br><a class="PictureWidth">' + object.picture + '</a>';
+                html = html + '<br>' + object.tweet;
+                html = html + '<br>' + object.time;
+
+                if (User != object.studentid) {
+                    var isFollowing = false;
+                    for (var j = 0; j < followObjects.length; j++) {
+                        var followObject = followObjects[j];
+                        if (followObject.toid === object.studentid) {
+                            isFollowing = true;
+                            break;
+                        }
+                    }
+
+                    if (isFollowing) {
+                        html = html + '<br>' + 'フォロー中' + '</td>';
+                    } else {
+                        html = html + '<br>' + '<button onclick="Follow(\'' + object.studentid + '\')">フォロー</button>' + '</td>';
+                    }
+                }
                 html = html + '</tr>';
             }
             html = html + '</table>';
@@ -91,33 +116,6 @@
             var html = '';
             html = html + '<div class="Center"><table border="1">';
             for (var i = 0; i < objects.length; i++) {
-                /*
-                var object = objects[i];
-                html = html + '<tr>';
-                //html = html + '<td>' + object.id + '</td>'
-                html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td></tr>'
-                //html = html + '<td>' + object.name + '</td>';
-                html = html + '<tr><td>' + object.picture + '</td></tr>';
-                html = html + '<tr><td>' + object.tweet + '</td></tr>';
-                html = html + '<tr><td>' + object.time + '</td></tr>';
-
-                if (User != object.studentid) {
-                    var isFollowing = false;
-                    for (var j = 0; j < followObjects.length; j++) {
-                        var followObject = followObjects[j];
-                        if (followObject.toid === object.studentid) {
-                            isFollowing = true;
-                            break;
-                        }
-                    }
-
-                    if (isFollowing) {
-                        html = html + '<td>' + 'フォロー中' + '</td>';
-                    } else {
-                        html = html + '<td>' + '<button onclick="Follow(\'' + object.studentid + '\')">フォロー</button>' + '</td>';
-                    }
-                }
-                */
                 var object = objects[i];
                 html = html + '<tr>';
                 //html = html + '<td>' + object.id + '</td>'
