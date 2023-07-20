@@ -26,7 +26,7 @@
             var searchResult = await osql.connect(searchUserid);
             var count = searchResult[0].count;
             if (count > 0) {
-                document.getElementById('result').innerHTML = '同一のuseridが存在します。変更してください。'
+                document.getElementById('result').innerHTML = '同一のuseridが存在します。変更してください。';
             } else {
                 var sql = `insert into Users (id, passward, name) values("${userid}", "${passward}", "${username}");`;
                 var objects = await osql.connect(sql);
