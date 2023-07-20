@@ -27,11 +27,20 @@
             if (id == MyId) {
                 var html = '<button onclick="DeleteAccount(\'' + MyId + '\')">アカウント削除ボタン</button>';
                 document.getElementById('button').innerHTML = html;
-            }
-            else if (id != MyId) {
-                var html = '<button onclick="FollowUser(\'' + id + '\')">フォローする</button>';
+            } else if (id != MyId) {
+                var MyfollowBack = `select count(*) as count from Follows where fromid = "${MyId}" and toid = "${id}";`;
+                var MyfollowBackResult = await osql.connect(MyfollowBack);
+                var count = MyfollowBackResult[0].count;
+                console.log("フォローカウント" + count);
+                if (count > 0) {
+                    var html = 'フォロー中';
+                } else {
+                    html = '<button onclick="FollowUser(\'' + id + '\')">フォローする</button>';// id = そのページの人のID
+                }
                 document.getElementById('button').innerHTML = html;
             }
+
+
 
             MyTweet();
         });
