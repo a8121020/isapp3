@@ -93,11 +93,11 @@
                 var object = objects[i];
                 html = html + '<tr>';
                 //html = html + '<td>' + object.id + '</td>'
-                html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td>'
-                html = html + '<td>' + object.name + '</td>';
-                html = html + '<td>' + object.tweet + '</td>';
-                html = html + '<td>' + object.picture + '</td>';
-                html = html + '<td>' + object.time + '</td>';
+                html = html + '<td>' + '<a href="userpage.html?id=' + object.studentid + '">@' + object.studentid + '</a></td></tr>'
+                //html = html + '<td>' + object.name + '</td>';
+                html = html + '<tr><td>' + object.picture + '</td></tr>';
+                html = html + '<tr><td>' + object.tweet + '</td></tr>';
+                html = html + '<tr><td>' + object.time + '</td></tr>';
 
                 if (User != object.studentid) {
                     var isFollowing = false;
