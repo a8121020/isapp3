@@ -3,5 +3,18 @@ body{
 }
 
 table{
-    width:40%;
+    width:30%;
+}
+
+.PictureWidth{
+    width:100px;
+}
+
+.Center{
+    text-align:center;
+}
+
+table{
+    text-align:center;
+    margin: auto;
 }
