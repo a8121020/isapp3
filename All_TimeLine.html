@@ -157,7 +157,8 @@
             if (Follower != Followed && ans == true) {
                 var sql = `insert into Follows (fromid,toid) values("${Follower}", "${Followed}")`;
                 var object = await osql.connect(sql);
-                document.getElementById("resultFollow").innerHTML = "フォローしました！"
+                //document.getElementById("resultFollow").innerHTML = "フォローしました！"
+                window.alert('フォローしました！')
             }
         }
 
