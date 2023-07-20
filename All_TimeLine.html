@@ -84,7 +84,7 @@
             var id = osql.getParam('id');
 
             var followSql = `select toid from Follows where fromid = '${User}'`;
-            var followObjects = await osql.connect(sql);
+            var followObjects = await osql.connect(followSql);
 
             var html = '';
             html = html + '<table border="1">';
@@ -99,44 +99,21 @@
                 html = html + '<td>' + object.time + '</td>';
 
                 if (User != object.studentid) {
+                    var isFollowing = false;
                     for (var j = 0; j < followObjects.length; j++) {
                         var followObject = followObjects[j];
-                        //var MyId = sessionStorage.getItem('userid');
-
-                        var MyfollowBack = `select count(*) as count from Follows where fromid = "${User}" and toid = "${followObject.fromid}";`;
-                        var MyfollowBackResult = await osql.connect(MyfollowBack);
-                        var count = MyfollowBackResult[0].count;
-
-                        if (count > 0) {
-                            html = html + '<td>' + 'フォロー中' + '</td>';
-                        } else if (followObject.fromid == User) {
-                            html = html + '<td></td>';
-                        } else {
-                            html = html + '<td>' + '<button onclick="Follow(\'' + followObject.fromid + '\')">フォロー</button>' + '</td>';
+                        if (followObject.toid === object.studentid) {
+                            isFollowing = true;
+                            break;
                         }
                     }
-                    //html = html + '<td>' + '<button onclick="Follow(\'' + object.studentid + '\')">フォローする</button>' + '</td>';
-                }
 
-                /*
-                for (var j = 0; j < followObjects.length; j++) {
-                    var followObject = followObjects[i];
-                    var MyId = sessionStorage.getItem('userid');
-
-                    var MyfollowBack = `select count(*) as count from Follows where fromid = "${MyId}" and toid = "${followObject.fromid}";`;
-                    var MyfollowBackResult = await osql.connect(MyfollowBack);
-                    var count = MyfollowBackResult[0].count;
-
-                    if (count > 0) {
+                    if (isFollowing) {
                         html = html + '<td>' + 'フォロー中' + '</td>';
-                    } else if (object.fromid == MyId) {
-                        html = html + '<td></td>';
                     } else {
-                        html = html + '<td>' + '<button onclick="newFollow(\'' + object.fromid + '\')">フォロー</button>' + '</td>';
+                        html = html + '<td>' + '<button onclick="Follow(\'' + object.studentid + '\')">フォロー</button>' + '</td>';
                     }
                 }
-                */
-
                 html = html + '</tr>';
             }
             html = html + '</table>';
