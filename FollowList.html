@@ -7,6 +7,7 @@
 
     <script type="text/javascript" src="lib/jquery.min.js"></script>
     <script type="text/javascript" src="lib/osql.js"></script>
+    <link rel="stylesheet" href="mystyle.css">
 
     <script>
         osql.requireLogin();//すべてのページに入れる．google認証をして，osql.connect()や，osql.getMe()を使えるようにしてくれる．
@@ -27,6 +28,9 @@
             var sql = `select toid from Follows where fromid = '${id}'`;
             var objects = await osql.connect(sql);
             var html = '';
+            if (objects.length == 0) {
+                html = html + "まだ誰もフォローしていません";
+            }
             html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
@@ -68,7 +72,7 @@
             if (Follower != Followed && ans == true) {
                 var sql = `insert into Follows (fromid,toid) values("${Follower}", "${Followed}")`;
                 var object = await osql.connect(sql);
-                document.getElementById("result").innerHTML = "フォローしました！"
+                document.getElementById("result").innerHTML = "フォローしました！";
             }
         }
 
@@ -77,11 +81,13 @@
 </head>
 
 <body>
-    <h2 id="userName"></h2>
-    <h2>フォロー中</h2>
-    <hr>
-    <div id="myFollow">読み込み中</div>
-    <p id="result"></p>
+    <div class="Center">
+        <h2 id="userName"></h2>
+        <h2>フォロー中</h2>
+        <hr>
+        <div id="myFollow">読み込み中</div>
+        <p id="result"></p>
+    </div>
 </body>
 
 </html>
